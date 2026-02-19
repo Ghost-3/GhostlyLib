@@ -1,15 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function (registrations) {
-            for (let registration of registrations) {
-                registration.unregister().then(function () {
-                    console.log('SW unregistered');
-                    window.location.reload(); // Перезагружаем страницу после удаления
-                });
-            }
-        });
-    }
-
     // --- THEME SWITCHER ---
     const themeToggle = document.getElementById('theme-toggle');
     const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -35,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentTag = 'all';
     let searchTerm = '';
 
-    // Функция фильтрации
     function applyFilters() {
         cards.forEach(card => {
             const title = card.querySelector('h2').textContent.toLowerCase();
@@ -54,12 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Логика поиска
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             searchTerm = e.target.value;
 
-            // Показываем/скрываем крестик
             if (searchTerm.length > 0) {
                 searchClear.classList.remove('hidden');
             } else {
@@ -77,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Логика тегов (обновленная)
     filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             currentTag = btn.getAttribute('data-tag');
@@ -94,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const toast = document.getElementById('bookmark-toast');
 
     if (toast) {
-        // Save scroll position
         let isScrolling;
         window.addEventListener('scroll', () => {
             window.clearTimeout(isScrolling);
@@ -105,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 100);
         });
 
-        // Show toast if saved position exists
         const savedPos = localStorage.getItem('scroll-' + storyId);
         if (savedPos && savedPos > 500) {
             toast.style.display = 'block';
@@ -116,50 +99,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- PROGRESS BAR ---
     const progressBar = document.getElementById('progress-bar');
 
     if (progressBar) {
         window.addEventListener('scroll', () => {
-            // Вычисляем, сколько прокручено
             const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-
-            // Вычисляем общую высоту контента за вычетом высоты окна
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-            // Переводим в проценты
             const scrolled = (winScroll / height) * 100;
-
-            // Применяем ширину
             progressBar.style.width = scrolled + "%";
         });
     }
 
-    // --- СКРЫТИЕ ШАПКИ ПРИ СКРОЛЛЕ ---
+    // --- HIDING THE HEADER WHEN SCROLLING ---
     const header = document.querySelector('header');
     let lastScrollY = window.scrollY;
-    const scrollThreshold = 10; // Минимальный порог прокрутки, чтобы не дергалось
+    const scrollThreshold = 10;
 
     window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
 
-        // 1. Если прокрутили совсем мало (у верха страницы) — всегда показываем
         if (currentScrollY <= 0) {
             header.classList.remove('header-hidden');
             return;
         }
 
-        // 2. Проверяем, прокрутили ли мы больше порога (чтобы убрать мигание)
         if (Math.abs(currentScrollY - lastScrollY) < scrollThreshold) {
             return;
         }
 
-        // 3. Если листаем вниз — прячем, если вверх — показываем
         if (currentScrollY > lastScrollY && !header.classList.contains('header-hidden')) {
-            // Скролл вниз
             header.classList.add('header-hidden');
         } else if (currentScrollY < lastScrollY && header.classList.contains('header-hidden')) {
-            // Скролл вверх
             header.classList.remove('header-hidden');
         }
 

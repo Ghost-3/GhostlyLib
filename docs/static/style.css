@@ -61,7 +61,6 @@ header {
     font-size: 1.2rem;
 }
 
-/* Ссылка на главную */
 .back-link {
     font-size: 1.2rem;
     font-weight: 600;
@@ -71,7 +70,6 @@ header {
     align-items: center;
     gap: 8px;
     transition: color 0.2s ease;
-    /* Плавный переход цвета */
 }
 
 .back-link:hover {
@@ -79,19 +77,15 @@ header {
     text-decoration: none;
 }
 
-/* Эффект при наведении (небольшое смещение стрелочки) */
 .back-link::before {
     content: '';
-    /* Если захотите заменить текстовую стрелку на иконку */
     transition: transform 0.2s ease;
 }
 
 .back-link:active {
     transform: scale(0.98);
-    /* Эффект нажатия */
 }
 
-/* Typography */
 h1,
 h2,
 h3 {
@@ -108,7 +102,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Story Content */
 article {
     font-size: 1.15rem;
 }
@@ -117,7 +110,6 @@ article p {
     margin-bottom: 1.5rem;
 }
 
-/* Cards Grid */
 .stories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -139,7 +131,6 @@ article p {
     margin-bottom: 1rem;
 }
 
-/* Tags */
 .tags {
     display: flex;
     flex-wrap: wrap;
@@ -176,7 +167,6 @@ article p {
     color: white;
 }
 
-/* Controls */
 #theme-toggle {
     background: none;
     border: 1px solid var(--border-color);
@@ -188,7 +178,6 @@ article p {
     height: 40px;
 }
 
-/* Bookmark Toast */
 #bookmark-toast {
     position: fixed;
     bottom: 20px;
@@ -202,7 +191,6 @@ article p {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Navigation between parts */
 .next-part-nav {
     margin-top: 4rem;
     padding: 2rem;
@@ -221,8 +209,6 @@ article p {
     }
 }
 
-/* Parts list */
-/* Контейнер деталей */
 .story-parts {
     margin: 1rem 0;
     border: 2px solid var(--border-color);
@@ -231,12 +217,10 @@ article p {
     background: var(--bg-color);
 }
 
-/* Заголовок (Summary) */
 .parts-title {
     padding: 0.8rem 1rem;
     cursor: pointer;
     list-style: none;
-    /* Убираем стандартную стрелку в Firefox */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -248,10 +232,8 @@ article p {
 
 .parts-title::-webkit-details-marker {
     display: none;
-    /* Убираем стрелку в Chrome/Safari */
 }
 
-/* Кастомная стрелочка (Chevron) */
 .chevron {
     width: 8px;
     height: 8px;
@@ -266,7 +248,6 @@ article p {
     transform: rotate(-135deg);
 }
 
-/* Список глав */
 .parts-list {
     margin: 0;
     padding: 0;
@@ -282,7 +263,6 @@ article p {
     border-bottom: none;
 }
 
-/* Ссылка на часть */
 .part-link {
     display: flex;
     align-items: center;
@@ -299,7 +279,6 @@ article p {
     color: var(--accent-color);
 }
 
-/* Номер части в кружочке */
 .part-number {
     font-size: 0.7rem;
     background: var(--tag-bg);
@@ -323,25 +302,20 @@ article p {
 #progress-container {
     position: fixed;
     bottom: 0;
-    /* Или top: 0, если захотите перенести наверх */
     left: 0;
     width: 100%;
     height: 4px;
     background: transparent;
     z-index: 1001;
-    /* Чуть выше шапки */
 }
 
 #progress-bar {
     height: 100%;
     width: 0%;
-    /* Начинаем с нуля */
     background-color: var(--accent-color);
     transition: width 0.1s ease-out;
-    /* Плавность движения */
     border-radius: 0 2px 2px 0;
     box-shadow: 0 0 10px var(--accent-color);
-    /* Небольшое свечение */
 }
 
 .search-container {
@@ -354,7 +328,6 @@ article p {
     width: 100%;
     padding: 0.8rem 1rem;
     padding-right: 2.5rem;
-    /* Место для крестика */
     border-radius: 12px;
     border: 1px solid var(--border-color);
     background: var(--card-bg);
@@ -392,16 +365,13 @@ article p {
     display: none;
 }
 
-/* Футер сайта */
 .site-footer {
     margin-top: 4rem;
-    /* Отступ от контента */
     padding-bottom: 3rem;
     color: var(--text-color);
     opacity: 0.8;
 }
 
-/* Разделительная линия */
 .footer-divider {
     border: 0;
     border-top: 1px solid var(--border-color);
@@ -429,7 +399,6 @@ article p {
     line-height: 1.4;
 }
 
-/* Стилизация ссылки на лицензию */
 .footer-license a {
     color: var(--accent-color);
     text-decoration: none;
@@ -443,7 +412,6 @@ article p {
     text-decoration: none;
 }
 
-/* Адаптивность */
 @media (max-width: 600px) {
     .site-footer {
         margin-top: 2rem;

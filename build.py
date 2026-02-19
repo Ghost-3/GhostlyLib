@@ -24,6 +24,11 @@ OUTPUT_DIR = Path(__file__).parent / "docs"
 TEMPLATES_DIR = Path(__file__).parent / "templates"
 STATIC_DIR = Path(__file__).parent / "static"
 
+SITE_URL = "http://127.0.0.1:8000"  # "https://ghost-3.github.io/GhostlyLib"
+INDEX_DESC = (
+    "Добро пожаловать в Призрачную библиотеку. Литературный архив рассказов Ghost."
+)
+
 SITE_TITLE = "Призрачная Библиотека"
 DEFAULT_AUTHOR = "Ghost"
 DATE_FORMAT = "%Y-%m-%d"
@@ -33,6 +38,11 @@ MD_EXTENSIONS = ["extra", "nl2br", "smarty", "markdown_callouts"]
 
 
 class ContentProcessor:
+    @staticmethod
+    def create_description(author: str, reading_time: int) -> str:
+        """Создает описание"""
+        return f"👤 {author} | ⏱️ {reading_time} мин. чтения."
+
     @staticmethod
     def calculate_reading_time(text: str) -> int:
         words = len(text.split())
@@ -71,6 +81,7 @@ class ContentProcessor:
 class SiteBuilder:
     def __init__(self):
         self.env = Environment(loader=FileSystemLoader(str(TEMPLATES_DIR)))
+        self.env.globals["SITE_URL"] = SITE_URL
         self.stories: List[Dict[str, Any]] = []
         self.all_tags: Set[str] = set()
 
@@ -97,8 +108,20 @@ class SiteBuilder:
         meta = ContentProcessor.parse_md(path)
 
         slug = f"{slugify(meta['title'])}.html"
+        description = ContentProcessor.create_description(
+            meta["author"],
+            meta["reading_time"],
+        )
 
-        self.render_to_file("base.html", {**meta}, slug)
+        self.render_to_file(
+            "base.html",
+            {
+                **meta,
+                "description": description,
+                "current_url": f"{SITE_URL}/{slug}",
+            },
+            slug,
+        )
 
         self.stories.append({**meta, "url": slug, "is_series": False})
         self.all_tags.update(meta["tags"])
@@ -134,12 +157,19 @@ class SiteBuilder:
                     "url": f"{series_slug}-{slugify(next_part_meta['title'])}.html",
                 }
 
+            part_description = ContentProcessor.create_description(
+                series_author,
+                meta["reading_time"],
+            )
+
             self.render_to_file(
                 "base.html",
                 {
                     **meta,
                     "title": f"{series_title} — {meta['title']}",
                     "next_part": next_part,
+                    "description": part_description,
+                    "current_url": f"{SITE_URL}/{filename}",
                 },
                 filename,
             )
@@ -173,6 +203,8 @@ class SiteBuilder:
                 "stories": self.stories,
                 "all_tags": sorted(list(self.all_tags)),
                 "title": SITE_TITLE,
+                "description": INDEX_DESC,
+                "current_url": SITE_URL,
             },
             "index.html",
         )
