@@ -24,7 +24,7 @@ OUTPUT_DIR = Path(__file__).parent / "docs"
 TEMPLATES_DIR = Path(__file__).parent / "templates"
 STATIC_DIR = Path(__file__).parent / "static"
 
-SITE_URL = "http://127.0.0.1:8000"  # "https://ghost-3.github.io/GhostlyLib"
+SITE_URL = "https://ghost-3.github.io/GhostlyLib"
 INDEX_DESC = (
     "Добро пожаловать в Призрачную библиотеку. Литературный архив рассказов Ghost."
 )
