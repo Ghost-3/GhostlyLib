@@ -33,7 +33,7 @@ SITE_TITLE = "Призрачная Библиотека"
 DEFAULT_AUTHOR = "Ghost"
 DATE_FORMAT = "%Y-%m-%d"
 WORDS_PER_MINUTE = 180
-MD_EXTENSIONS = ["extra", "nl2br", "smarty", "markdown_callouts"]
+MD_EXTENSIONS = ["extra", "nl2br", "smarty", "markdown_callouts", 'footnotes']
 # =======================================================
 
 

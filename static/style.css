@@ -426,3 +426,68 @@ article p {
         font-size: 0.75rem;
     }
 }
+
+.footnotes hr {
+    width: 20%;
+    margin: 4rem 0 2rem 0;
+    border-top: 1px solid var(--border-color);
+    opacity: 0.5;
+}
+
+.footnotes {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    line-height: 1.5;
+    margin-top: 3rem;
+    color: var(--text-color);
+}
+
+.footnote-ref {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--accent-color);
+    padding: 0 2px;
+}
+
+.footnote-backref {
+    text-decoration: none;
+    color: var(--accent-color);
+    margin-left: 5px;
+    font-family: sans-serif;
+}
+
+:target {
+    background-color: rgba(52, 152, 219, 0.1);
+    transition: background-color 1s ease;
+}
+
+.footnotes ol {
+    padding-left: 20px;
+}
+
+.footnotes li {
+    margin-bottom: 0.5rem;
+}
+
+#fn-tooltip {
+    position: absolute;
+    z-index: 1000;
+    max-width: 300px;
+    padding: 0 15px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    display: none;
+}
+
+#fn-tooltip.visible {
+    opacity: 1;
+    display: block;
+}
