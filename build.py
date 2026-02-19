@@ -26,7 +26,7 @@ STATIC_DIR = Path(__file__).parent / "static"
 
 SITE_URL = "https://ghost-3.github.io/GhostlyLib"
 INDEX_DESC = (
-    "Добро пожаловать в Призрачную библиотеку. Литературный архив рассказов Ghost."
+    "Добро пожаловать в Призрачную библиотеку — литературный архив рассказов Ghost."
 )
 
 SITE_TITLE = "Призрачная Библиотека"
