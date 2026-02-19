@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" id="theme-meta" content="#ffffff">
+    <link rel="icon" type="image/png" href="static/favicon.png">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="static/style.css">
+    <script>!function () { var e = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light"); document.documentElement.setAttribute("data-theme", e), document.documentElement.style.colorScheme = e }()</script>
+</head>
+
+<body>
+    <header>
+        <a class="back-link" href="index.html">🏠 На главную</a>
+        <button id="theme-toggle" aria-label="Переключить тему"></button>
+    </header>
+
+    <main class="container">
+        <header class="story-header">
+            <h1>{{ title }}</h1>
+            <div class="card-meta">
+                <span>👤 {{ author }}</span> •
+                <span>📅 {{ date }}</span> •
+                <span>⏱️ {{ reading_time }} мин. чтения</span>
+            </div>
+            <div class="tags">
+                {% for tag in tags %}
+                <span class="tag">#{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </header>
+
+        <article>
+            {{ html | safe }}
+        </article>
+
+        {% if next_part %}
+        <nav class="next-part-nav">
+            <p>Продолжение следует:</p>
+            <a href="{{ next_part.url }}">
+                <h2>{{ next_part.title }} →</h2>
+            </a>
+        </nav>
+        {% endif %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <hr class="footer-divider">
+            <div class="footer-content">
+                <p class="footer-copy">© {{ author }}, {{ date[:4] if date else '2026' }}</p>
+                <p class="footer-license">
+                    Литературный контент доступен по лицензии
+                    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ru" target="_blank" rel="noopener">
+                        CC BY-NC-ND 4.0
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="bookmark-toast">Вернуться к месту чтения 🔖</div>
+
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <script src="static/script.js"></script>
+</body>
+
+</html>

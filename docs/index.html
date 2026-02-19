@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" id="theme-meta" content="#ffffff">
+    <link rel="icon" type="image/png" href="static/favicon.png">
+    <title>Призрачная Библиотека</title>
+    <link rel="stylesheet" href="static/style.css">
+    <script>!function () { var e = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light"); document.documentElement.setAttribute("data-theme", e), document.documentElement.style.colorScheme = e }()</script>
+</head>
+
+<body>
+    <header>
+        <span class="logo">📚 Призрачная Библиотека</span>
+        <button id="theme-toggle" aria-label="Переключить тему"></button>
+    </header>
+
+    <main class="container">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Поиск рассказа, автора или тега..." aria-label="Поиск">
+            <button id="search-clear" class="hidden" aria-label="Очистить поиск">✕</button>
+        </div>
+
+        <div class="tag-filters">
+            <button class="filter-btn active" data-tag="all">Все</button>
+            
+            <button class="filter-btn" data-tag="Драма">#Драма</button>
+            
+            <button class="filter-btn" data-tag="Психология">#Психология</button>
+            
+            <button class="filter-btn" data-tag="Рассказ">#Рассказ</button>
+            
+            <button class="filter-btn" data-tag="Фэнтэзи">#Фэнтэзи</button>
+            
+        </div>
+
+        <div class="stories-grid">
+            
+            <article class="card" data-tags="Рассказ,Психология,Драма,Фэнтэзи">
+                <div class="card-meta">2026-02-18</div>
+                <h2><a href="krylia-iz-sazhi.html">Крылья из сажи</a></h2>
+                <p>Автор: Ghost | 52 мин.</p>
+
+                
+
+                <div class="tags">
+                    
+                    <span class="tag">#Рассказ</span>
+                    
+                    <span class="tag">#Психология</span>
+                    
+                    <span class="tag">#Драма</span>
+                    
+                    <span class="tag">#Фэнтэзи</span>
+                    
+                </div>
+            </article>
+            
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <hr class="footer-divider">
+            <div class="footer-content">
+                <p class="footer-copy">© Ghost, 2026</p>
+                <p class="footer-license">
+                    Литературный контент доступен по лицензии
+                    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ru" target="_blank" rel="noopener">
+                        CC BY-NC-ND 4.0
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/script.js"></script>
+</body>
+
+</html>

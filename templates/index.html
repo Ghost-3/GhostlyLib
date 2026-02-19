@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" id="theme-meta" content="#ffffff">
+    <link rel="icon" type="image/png" href="static/favicon.png">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="static/style.css">
+    <script>!function () { var e = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light"); document.documentElement.setAttribute("data-theme", e), document.documentElement.style.colorScheme = e }()</script>
+</head>
+
+<body>
+    <header>
+        <span class="logo">📚 {{ title }}</span>
+        <button id="theme-toggle" aria-label="Переключить тему"></button>
+    </header>
+
+    <main class="container">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Поиск рассказа, автора или тега..." aria-label="Поиск">
+            <button id="search-clear" class="hidden" aria-label="Очистить поиск">✕</button>
+        </div>
+
+        <div class="tag-filters">
+            <button class="filter-btn active" data-tag="all">Все</button>
+            {% for tag in all_tags %}
+            <button class="filter-btn" data-tag="{{ tag }}">#{{ tag }}</button>
+            {% endfor %}
+        </div>
+
+        <div class="stories-grid">
+            {% for story in stories %}
+            <article class="card" data-tags="{{ story.tags | join(',') }}">
+                <div class="card-meta">{{ story.date }}</div>
+                <h2><a href="{{ story.url }}">{{ story.title }}</a></h2>
+                <p>Автор: {{ story.author }} | {{ story.reading_time }} мин.</p>
+
+                {% if story.is_series %}
+                <details class="story-parts">
+                    <summary class="parts-title">
+                        <span>Открыть список глав ({{ story.parts | length }})</span>
+                        <span class="chevron"></span>
+                    </summary>
+                    <ul class="parts-list">
+                        {% for part in story.parts %}
+                        <li>
+                            <a href="{{ part.url }}" class="part-link">
+                                <span class="part-number">{{ loop.index }}</span>
+                                <span class="part-name">{{ part.title }}</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </details>
+                {% endif %}
+
+                <div class="tags">
+                    {% for tag in story.tags %}
+                    <span class="tag">#{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <hr class="footer-divider">
+            <div class="footer-content">
+                <p class="footer-copy">© Ghost, 2026</p>
+                <p class="footer-license">
+                    Литературный контент доступен по лицензии
+                    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ru" target="_blank" rel="noopener">
+                        CC BY-NC-ND 4.0
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/script.js"></script>
+</body>
+
+</html>
