@@ -7,21 +7,21 @@
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" id="theme-meta" content="#ffffff">
     <link rel="icon" type="image/png" href="static/favicon.png">
-    <title>{{ title }}</title>
-    <meta name="description" content="{{ description }}">
+    <title>test — 2</title>
+    <meta name="description" content="👤 Ghost • 📅 2026-02-19 • ⏱️ 1 мин. чтения.">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="{{ current_url }}">
-    <meta property="og:title" content="{{ title }}">
-    <meta property="og:description" content="{{ description }}">
-    <meta property="og:image" content="{{ SITE_URL }}/static/og-cover.png">
+    <meta property="og:url" content="https://ghost-3.github.io/GhostlyLib/test-2.html">
+    <meta property="og:title" content="test — 2">
+    <meta property="og:description" content="👤 Ghost • 📅 2026-02-19 • ⏱️ 1 мин. чтения.">
+    <meta property="og:image" content="https://ghost-3.github.io/GhostlyLib/static/og-cover.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:url" content="{{ current_url }}">
-    <meta name="twitter:title" content="{{ title }}">
-    <meta name="twitter:description" content="{{ description }}">
+    <meta name="twitter:url" content="https://ghost-3.github.io/GhostlyLib/test-2.html">
+    <meta name="twitter:title" content="test — 2">
+    <meta name="twitter:description" content="👤 Ghost • 📅 2026-02-19 • ⏱️ 1 мин. чтения.">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="{{ SITE_URL }}/static/og-cover.png">
+    <meta name="twitter:image" content="https://ghost-3.github.io/GhostlyLib/static/og-cover.png">
     <link rel="stylesheet" href="static/style.css">
     <script>!function () { var e = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light"); document.documentElement.setAttribute("data-theme", e), document.documentElement.style.colorScheme = e }()</script>
 </head>
@@ -34,51 +34,47 @@
 
     <main class="container">
         <header class="story-header">
-            <h1>{{ title }}</h1>
+            <h1>test — 2</h1>
             <div class="card-meta">
-                <span>👤 {{ author }}</span> •
-                <span>📅 {{ date }}</span> •
-                <span>⏱️ {{ reading_time }} мин. чтения</span>
+                <span>👤 Ghost</span> •
+                <span>📅 2026-02-19</span> •
+                <span>⏱️ 1 мин. чтения</span>
             </div>
             <div class="tags">
-                {% for tag in tags %}
-                <span class="tag">#{{ tag }}</span>
-                {% endfor %}
+                
             </div>
         </header>
 
         <article>
-            {{ html | safe }}
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </article>
 
-        {% if prev_part or next_part %}
+        
         <nav class="story-navigation">
             <div class="nav-wrapper">
-                {% if prev_part %}
-                <a href="{{ prev_part.url }}" class="nav-card prev">
+                
+                <a href="test-1.html" class="nav-card prev">
                     <span class="nav-label">← Назад</span>
-                    <span class="nav-title">{{ prev_part.title }}</span>
+                    <span class="nav-title">1</span>
                 </a>
-                {% else %}
-                <div class="nav-spacer"></div>
-                {% endif %}
+                
 
-                {% if next_part %}
-                <a href="{{ next_part.url }}" class="nav-card next">
+                
+                <a href="test-3.html" class="nav-card next">
                     <span class="nav-label">Вперед →</span>
-                    <span class="nav-title">{{ next_part.title }}</span>
+                    <span class="nav-title">3</span>
                 </a>
-                {% endif %}
+                
             </div>
         </nav>
-        {% endif %}
+        
     </main>
 
     <footer class="site-footer">
         <div class="container">
             <hr class="footer-divider">
             <div class="footer-content">
-                <p class="footer-copy">© {{ author }}, {{ date[:4] if date else '2026' }}</p>
+                <p class="footer-copy">© Ghost, 2026</p>
                 <p class="footer-license">
                     Литературный контент доступен по лицензии
                     <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ru" target="_blank" rel="noopener">

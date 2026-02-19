@@ -155,6 +155,10 @@ class SiteBuilder:
         for i, meta in enumerate(parts_meta):
             current_url = parts_links[i]["url"]
 
+            prev_part = None
+            if i > 0:
+                prev_part = parts_links[i-1]
+
             next_part = None
             if i < len(parts_meta) - 1:
                 next_part = parts_links[i + 1]
@@ -168,6 +172,7 @@ class SiteBuilder:
                     "title": f"{series_title} — {meta['title']}",
                     "description": description,
                     "current_url": f"{SITE_URL}/{current_url}",
+                    "prev_part": prev_part,
                     "next_part": next_part,
                 },
                 current_url,
