@@ -33,15 +33,18 @@ SITE_TITLE = "Призрачная Библиотека"
 DEFAULT_AUTHOR = "Ghost"
 DATE_FORMAT = "%Y-%m-%d"
 WORDS_PER_MINUTE = 180
-MD_EXTENSIONS = ["extra", "nl2br", "smarty", "markdown_callouts", 'footnotes']
+MD_EXTENSIONS = ["extra", "nl2br", "smarty", "markdown_callouts", "footnotes"]
 # =======================================================
 
 
 class ContentProcessor:
     @staticmethod
-    def create_description(author: str, reading_time: int) -> str:
+    def create_description(meta: Dict[str, Any]) -> str:
         """Создает описание"""
-        return f"👤 {author} | ⏱️ {reading_time} мин. чтения."
+        author = meta.get("author", DEFAULT_AUTHOR)
+        reading_time = meta.get("reading_time", 0)
+        date = meta.get("date")
+        return f"👤 {author} • 📅 {date} • ⏱️ {reading_time} мин. чтения."
 
     @staticmethod
     def calculate_reading_time(text: str) -> int:
@@ -108,10 +111,7 @@ class SiteBuilder:
         meta = ContentProcessor.parse_md(path)
 
         slug = f"{slugify(meta['title'])}.html"
-        description = ContentProcessor.create_description(
-            meta["author"],
-            meta["reading_time"],
-        )
+        description = ContentProcessor.create_description(meta)
 
         self.render_to_file(
             "base.html",
@@ -131,49 +131,59 @@ class SiteBuilder:
         if not md_files:
             return
 
+        # 1. Собираем список мета-словарей для всех глав
         parts_meta = [ContentProcessor.parse_md(f) for f in md_files]
 
-        first_meta = parts_meta[0]
-        series_title = first_meta.get("story_name", folder.name)
-        series_slug = slugify(series_title)  # Базовое имя для всей серии
+        # 2. Определяем данные серии по умолчанию
+        first = parts_meta[0]
+        series_title = first.get("story_name", folder.name)
+        series_author = first.get("author", DEFAULT_AUTHOR)
+        series_date = first.get("date")
+        series_slug = slugify(series_title)
 
-        series_author = first_meta["author"]
-        series_date = first_meta["date"]
-        series_tags = set().union(*(p["tags"] for p in parts_meta))
-        total_time = sum(p["reading_time"] for p in parts_meta)
-
+        # 3. Формируем ссылки и считаем общие данные
         parts_links = []
-        for i, meta in enumerate(parts_meta):
-            part_title_slug = slugify(meta["title"])
-            filename = f"{series_slug}-{part_title_slug}.html"
+        series_tags = set()
+        total_time = 0
 
+        for i, meta in enumerate(parts_meta):
+            # Обогащаем метаданные каждой главы данными серии, если они не заданы
+            meta["story_name"] = meta.get("story_name", series_title)
+            meta["author"] = meta.get("author", series_author)
+
+            # Генерируем URL
+            filename = f"{series_slug}-{slugify(meta['title'])}.html"
             parts_links.append({"title": meta["title"], "url": filename})
 
+            # Статистика для главной карточки
+            total_time += meta["reading_time"]
+            series_tags.update(meta.get("tags", []))
+
+        # 4. Рендерим каждую главу
+        for i, meta in enumerate(parts_meta):
+            current_url = parts_links[i]["url"]
+
+            # Навигация
             next_part = None
             if i < len(parts_meta) - 1:
-                next_part_meta = parts_meta[i + 1]
-                next_part = {
-                    "title": next_part_meta["title"],
-                    "url": f"{series_slug}-{slugify(next_part_meta['title'])}.html",
-                }
+                next_part = parts_links[i + 1]
 
-            part_description = ContentProcessor.create_description(
-                series_author,
-                meta["reading_time"],
-            )
+            # Генерируем описание (теперь передаем meta целиком)
+            description = ContentProcessor.create_description(meta)
 
             self.render_to_file(
                 "base.html",
                 {
-                    **meta,
+                    **meta,  # Здесь уже есть meta['html'], meta['author'] и т.д.
                     "title": f"{series_title} — {meta['title']}",
+                    "description": description,
+                    "current_url": f"{SITE_URL}/{current_url}",
                     "next_part": next_part,
-                    "description": part_description,
-                    "current_url": f"{SITE_URL}/{filename}",
                 },
-                filename,
+                current_url,
             )
 
+        # 5. Добавляем в общий список
         self.stories.append(
             {
                 "title": series_title,
